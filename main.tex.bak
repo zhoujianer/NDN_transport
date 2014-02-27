@@ -355,7 +355,7 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{A smart explicitness congestion notification transport control mechanism for NDN}
+\title{An explicit congestion notification transport control mechanism for NDN}
 
 
 % author names and affiliations
@@ -413,7 +413,7 @@ Gaogang Xie\IEEEauthorrefmark{1}}
 
 \begin{abstract}
 %\boldmath
-Named Data Network(NDN) is a new Internet architecture. Its changes of the network layer also shed light on the transport layer. The Data coming back along the same path of the Interest natively acts as a barrier of the Explicit Congestion Notification (ECN) information to receiver.  Avoiding a congesting path can be achieved by adaptive forwarding which is a main feature of the NDN data plane. In this paper we implement an ECN transport mechanism in NDN, using the Data to carry ECN information. And we make use of network-wide information of the SDN controller  to design smart forwarding mechanism. Our simulation in ndnSim shows that the ECN transport mechanism out-performance TCP-style NDN transport mechanisms in link utilization, packet dropping and flow complete time. The network-view information of the SDN controller can optimize the adaptive forwarding in NDN. By joining the ECN congestion mechanism and smart forwarding, the total flow complete time can be reduced.
+Named Data Network(NDN) is a new Internet architecture. Its changes of the network layer also sheds light on the transport layer. The Data which comes back along the same path of the Interest natively acts as a barrier of the Explicit Congestion Notification (ECN) information to receiver.  Avoiding a congesting path can be achieved by adaptive forwarding which is a main feature of the NDN data plane. In this paper we implement an ECN transport mechanism in NDN, using the Data to carry ECN information. And we make use of network-wide information of the SDN controller  to design smart forwarding mechanism. Our simulations in ndnSim show that the ECN transport mechanism outperform TCP-style NDN transport mechanisms in link utilization, packet dropping and flow complete time. The network-view information of the SDN controller can optimize the adaptive forwarding in NDN. By joining the ECN transport mechanism and smart forwarding, the total flow complete time can be reduced.
 
 \emph{Index Terms}-NDN, Transport mechanism, ECN, Congestion control, Adaptive forwarding
 \end{abstract}
@@ -448,9 +448,9 @@ Named Data Network(NDN) is a new Internet architecture. Its changes of the netwo
 \input{related}
 
 \section{Conclusion}
-In conclusion, we propose a ECN congestion control and a smart forwarding mechanism in NDN. Datas carry the ECN information to receivers. Receivers use ECN information to adjust its Interest sending rate. Under smart forwarding mechanism, routers choose a best forwarding interface using the SDN controller's network-view information. The ECN congestion control mechanism can ultimately use the link utilization and reduce the dropping packets. By joining the smart forwarding and ECN transport mechanism, the whole network resource can be effective used and total flow complete time can be reduced.
+In conclusion, we propose a ECN congestion control and smart forwarding mechanism in NDN. Data carries the ECN information to receivers. Receivers use ECN information to adjust its Interest sending rate. Under smart forwarding mechanism, routers choose a best forwarding interface using the SDN controller's network-view information. The ECN transport mechanism can ultimately use the link utilization and reduce the dropping packets. By joining the smart forwarding and ECN transport mechanism, the whole network resource can be effective used and total flow complete time can be reduced.
 
-The future work will be focused on the theory proven of the system stability. In NDN, as the in-network cache, the Data's providers can be changed. That will influence the ECN information coming back the receiver and the RTT. We also want to analysis what would happen on such situation and how to make effective resolution for this.
+The future work will be focused on the theory proven of the system stability. In NDN, as the in-network cache, a Data will have serval providers. That will influence the ECN information carried by Data and the RTT. We want to analysis what would happen on such situation and how to make effective resolution for this.
 % conference papers do not normally have an appendix
 
 

@@ -28,7 +28,7 @@ By Eq. 4 $Flow_{num}=\frac{C}{R(t-RTT_{avg})\ast{Size_{d}}}$, the flow number of
 % and a .pdf suffix will be assumed for pdflatex; or what has been declared
 % via \DeclareGraphicsExtensions.
 \centering
-\caption{The accuracy of estimation of flow number.}
+\caption{The accuracy of estimated flow number.}
 \label{fig-flownum}
 \end{figure}
 
@@ -42,7 +42,7 @@ We use bottleneck topology to estimate the ECN Interest sending rate mechanism. 
 % and a .pdf suffix will be assumed for pdflatex; or what has been declared
 % via \DeclareGraphicsExtensions.
 \centering
-\caption{The bottleneck's link utilization compared with ICP and ICP-shape when change the bottleneck bandwidth.}
+\caption{Bottleneck link utilization compared with ICP and ICP-shape when change the bottleneck bandwidth.}
 \label{fig-linkuti}
 \end{figure}
 
@@ -54,7 +54,7 @@ Because the ECN Interest sending rate makes sure that the rate can not overflow 
 % and a .pdf suffix will be assumed for pdflatex; or what has been declared
 % via \DeclareGraphicsExtensions.
 \centering
-\caption{The number of dropping packets in bottleneck compared with ICP and ICP-shape when change the bottleneck bandwidth.}
+\caption{Bottleneck dropping packets compared with ICP and ICP-shape when change the bottleneck bandwidth.}
 \label{fig-drop}
 \end{figure}
 
@@ -66,7 +66,7 @@ As Eq.5 shows, the packets in the queue should do the utmost to be drained. This
 % and a .pdf suffix will be assumed for pdflatex; or what has been declared
 % via \DeclareGraphicsExtensions.
 \centering
-\caption{The volume of queuing packets in bottleneck compared with ICP and ICP-shape when change the bottleneck bandwidth.}
+\caption{ Bottleneck queuing packets compared with ICP and ICP-shape when change the bottleneck bandwidth.}
 \label{fig-queue}
 \end{figure}
 
@@ -92,7 +92,7 @@ We demonstrate the effectiveness of smart adaptive forwarding mechanism using me
 % and a .pdf suffix will be assumed for pdflatex; or what has been declared
 % via \DeclareGraphicsExtensions.
 \centering
-\caption{Total flow complete time compared with other two forwarding mechanisms.}
+\caption{Total flow complete time compared with forwarding mechanisms.}
 \label{fig-tfct}
 \end{figure}
 
