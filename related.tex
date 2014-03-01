@@ -1,9 +1,18 @@
 %!TEX root = main.tex
 
 \section{Related work}
-Two kinds of congestion control mechanisms have been widely studied in the traditional network transport layer.
 
-TCP-style. TCP-style mechanisms are widely used nowadays.  Every sender maintains a sending window. The sending window will additively increase if the RTT is below an estimated value, otherwise window will multiplicatively decrease\cite{TCP}. TCP-style mechanism is very easy to implement, just on the host. But the utilization is low in high bandwidth-delay network because the slow start principle and it is unfair when long flow competes with short flow.
+% Two kinds of congestion control mechanisms have been widely studied in the traditional network transport layer.
+
+% TCP-style. TCP-style mechanisms are widely used nowadays.  Every sender maintains a sending window. The sending window will additively increase if the RTT is below an estimated value, otherwise window will multiplicatively decrease\cite{TCP}. TCP-style mechanism is very easy to implement, just on the host. But the utilization is low in high bandwidth-delay network because the slow start principle and it is unfair when long flow competes with short flow.
+
+Congestion control mechanisms in TCP/IP network can be grouped into two categories:
+
+\emph{Congestion Window} Congestion window mechanism is widely deployed nowadays. Each end in the communication maintains a congestion window, which will additively increase if the RTT is below the estimation value, otherwise multiplicatively decrease, known as AIMD\cite{TCP}. Congestion window mechanism is easy to deploy since it only requires modification in end hosts. However, congestion window results to low utilization in high bandwidth-delay networks because of the slow start function and it's unfair for short flows when mixed with long flows.
+
+\emph{Explicit Congestion Notification (ECN)} ECN mechanism notifies network condition by explicit information, such as in XCP\cite{XCP}, RCP\cite{RCP}. End host adjusts its transmission rate according to the ECN information it has received. \red{(who sends the ECN information?)} 
+
+% TODO 
 
 ECN-style. ECN-style mechanism uses ECN information to sense the condition of the network, such as XCP\cite{XCP}, RCP\cite{RCP}. The senders react its sending rate according the ECN information. Compared with TCP-style, who use implicit congestion information, ECN-style can effectively use the network resource and achieve fairness. Although our Interest sending rate's design principle is similar with RCP, our design process is different. In this paper we use \emph{R(t)} to control the receiver's sending rate, but RCP use the \emph{R(t)} to control the sender's packet sending rate. We also have to consider the size of Data, and in RCP the packet's size has not relationship with the design process.
 
