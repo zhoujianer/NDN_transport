@@ -71,6 +71,8 @@ Named Data Network(NDN) is a new Internet architecture. Its change of the networ
 \input{simulation}
 
 \section{Conclusion}
+\label{sec:conclude}
+
 In conclusion, we propose a ECN congestion control and smart forwarding mechanism in NDN. Data carries the ECN information to receivers. Receivers use ECN information to adjust its Interest sending rate. Under smart forwarding mechanism, routers choose a best forwarding interface using the SDN controller's network-view information. The ECN transport mechanism can ultimately use the link utilization and reduce the dropping packets. By joining the smart forwarding and ECN transport mechanism, the whole network resource can be effective used and total flow complete time can be reduced.
 
 The future work will be focused on the theoretical analysis of system stability. In NDN, as the in-network cache, a Data will have several providers. That will influence the ECN information carried by Data and the RTT. We want to analysis what would happen on such situation and how to make effective resolution for this.

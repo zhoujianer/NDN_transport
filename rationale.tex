@@ -1,6 +1,9 @@
 %!TEX root = main.tex
 
 \section{Design rationale}
+
+\label{sec:rationale}
+
 When we initially think about the transport control mechanism in new network architecture, the first question is who dominant and should be responsible for the congestion control? In TCP/IP, as its push principle, it is the senders who deal with the network congestion by changing the packet sending window. Under the pull nature of NDN, it is obviously that the receivers should be responsible for the network congestion. The one-Interest one-Data principle makes it possible to control the network traffic through the control of Interest sending rate. Such control congestion is called receiver-driven transport mechanism\cite{Contug}. Our design also follows the receiver-driven principle.
 
 If several flows share one link, it is ideal that the link bandwidth is ultimately used and at the same time fairly shared by all the flows. ECN information reflects the network resource situation such as that the available bandwidth and flow number of the path. By the ECN information, receivers can adjust its Interest sending rate to ultimately use the bandwidth and achieve fairness. So our first design goal is to use the ECN information to control the receiver's Interest sending rate.

@@ -2,6 +2,8 @@
 
 \section{Background}
 
+\label{sec:bg}
+
 % We recall some features of NDN that we will use to design our transport mechanism. The full description of NDN can be found in NDN paper\cite{NDN}\cite{Adaptive}.
 
 NDN adopts transport mechanism \cite{NDN, Adaptive} which is distinct from TCP/IP network or other ICN proposals. In NDN, consumer issues one Interest to retrieve only one piece of Data. Thus consumer could control the transmission rate by adapting the number of issuing Interests. On receiving an Interest, routers maintain an entry for it in its PIT to ensure Data is forwarded back exactly along the path that Interest is transmitted. Such a ``reverse path'' feature enables that Data could carry Explicit Congestion Notification (ECN) information back to consumers.
