@@ -8,11 +8,11 @@ To achieve the two goals above, our design divided into three parts. First we de
 \subsection{ECN Interest sending rate}
 Our motivation is to send Interest at a maximum rate that the path can handle the corresponding coming back Data without dropping. To achieve this, every router on the path should calculates each flow's maximum Interest sending rate that it can handle, without causing congestion. We define such maximum rate as $R(t)$.
 
-Fig.~\ref{fig-header} shows the Interest and Data ECN header. The ECN header contains the explicit congestion notification information on the path. The Interest carries the RTT of the flow. The RTT is defined as the interval between the time receiver sends an Interest to the time it receives the corresponding Data. In our design, RTT is used to determine the updating interval of $R(t)$. The provider copied the Interest's RTT to Data when it send back the Data, and the routers do not change it along the path. The router compares the $R(t)$ that is recorded in the Data with its own $R(t)$. If the router's rate is smaller, it replaces it. By this way, the coming back Data carries the minimum $R(t)$ of all the routers along the path. As the Data comes back along the same path of the Interest, the rate on the Data also reflects the path of the Interest. Each receiver sends its Interest according the $R(t)$ it receives last Data.
+Fig.~\ref{fig-header} shows the Interest and Data ECN header. The ECN header contains the explicit congestion notification information on the path. The Interest carries the RTT(Round Trip Time) of the flow. The RTT is defined as the interval between the time receiver sends an Interest to the time it receives the corresponding Data. In our design, RTT is used to determine the updating interval of $R(t)$. The provider copied the Interest's RTT to Data when it send back the Data, and the routers do not change it along the path. The router compares the $R(t)$ that is recorded in the Data with its own $R(t)$. If the router's rate is smaller, it replaces it. By this way, the coming back Data carries the minimum $R(t)$ of all the routers along the path. As the Data comes back along the same path of the Interest, the rate on the Data also reflects the path of the Interest. Each receiver sends its Interest according the $R(t)$ it receives last Data.
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=3in]{header-ndn.pdf}
+	\includegraphics[width=2.5in]{header-ndn.pdf}
 	\caption{Explicit congestion notification header for Interest and Data.}
 	\label{fig-header}
 \end{figure}
@@ -22,13 +22,13 @@ Suppose we know how many flows going through a link, and we want to share its ba
 	\label{eq:rt}
 	R(t)=\frac{C}{Flow_{num}*Size_{d}} \enspace .
 \end{equation}
-In the equation, $Size_{d}$ is the size of incoming Data, $Flow_{num}$ is the number of flows on the link. Eq.~\ref{eq:rt} is the ideal situation. When the network condition changes, such as a new flow is added, $R(t)$ should be updated. To make the update process reasonable and let the system enter stable situation, Eq.~\ref{eq:rt} should be improved as:
+In the equation, $Size_{d}$ is the size of incoming Data, $C$ is the bandwidth of the link, $Flow_{num}$ is the number of flows on the link. Eq.~\ref{eq:rt} is the ideal situation. When the network condition changes, such as a new flow is added, $R(t)$ should be updated. To make the update process reasonable and let the system enter stable situation, Eq.~\ref{eq:rt} should be improved as:
 \begin{equation}
 	\label{eq:updated_rt}
-	R(t)=R(t-RTT_{avg})+\frac{\alpha(C-S(t))-\beta\frac{Q(t)}{RTT_{avg}}}{Flow_{num}*Size_{d}} \enspace 
+	R(t)=R(t-RTT_{avg})+\frac{\alpha(C-S(t))-\beta\frac{Q(t)}{RTT_{avg}}}{Flow_{num}*Size_{d}} \enspace
 \end{equation}
 
-In the Eq.~\ref{eq:updated_rt}, $R(t)$ is the Interest sending rate that the router assigns to all flows at time $t$, $C$ is the bandwidth of the link, $S(t)$ is the speed of coming back Data, $Q(t)$ is the packets that occupied in the queue at time $t$, $\alpha$ and $\beta$ are the parameters that influence the convergence and performance, $RTT_{avg}$ is the average RTT of all the flows that go through this router. We set $RTT_{avg}$ as the updating interval of $R(t)$.
+In the Eq.~\ref{eq:updated_rt}, $R(t)$ is the Interest sending rate that the router assigns to all flows at time $t$, $S(t)$ is the speed of coming back Data, $Q(t)$ is the packets that occupied in the queue at time $t$, $\alpha$ and $\beta$ are the parameters that influence the convergence and performance, $RTT_{avg}$ is the average RTT of all the flows that go through this router. We set $RTT_{avg}$ as the updating interval of $R(t)$.
 
 The definition of $R(t)$ in Eq.~\ref{eq:updated_rt} is explained as follows. The available bandwidth and queue should be fairly shared by all the flows, so the link's available resource is divided by the number of flow. If $(C-S(t))>0$, there are more available bandwidth to be used and the transmission rate of each flow should be increased. Otherwise, the bandwidth has been over used and the sending rate should be reduced. We assume that the packets occupied in the queue should always come to zero. If it is not zero, it means too many Data packets flow into this link, and the Interest sending rate should be reduced. In every $RTT_{avg}$ the router should drain $Q(t)/RTT_{avg}$ Data packets. Because the $R(t)$ is the Interest sending rate, and the available resource is supplied to the Data, so we divide it by the size of Data.
 
@@ -44,7 +44,7 @@ Using the prefix of the Interest name to estimate the number of flows traversing
 	Flow_{num}=\frac{C}{R(t-RTT_{avg})\ast{Size_{d}}} \enspace .
 \end{equation}
 
-As we set every flow share the link bandwidth equally, and every flow's rate is the same, it is reasonable to use Eq.~\ref{eq:flownum} to estimate the number of flows. In Sec.~\ref{sec:simulation}, we will \red{evaluate by simulation} that the estimation is correctly.
+As we set every flow share the link bandwidth equally, and every flow's rate is the same, it is reasonable to use Eq.~\ref{eq:flownum} to estimate the number of flows. In Sec.~\ref{sec:simulation}, we will evaluate by simulation that the estimation is correctly.
 Combining with Eq.~\ref{eq:flownum}, Eq.~\ref{eq:updated_rt3} becomes:
 \begin{equation}
 	\label{eq:updated_rt5}
@@ -96,7 +96,7 @@ Our design goal is to minimize the Total Flow Complete Time (TFCT) in the networ
 		&              && \max \min  R_i \enspace .
 	\end{aligned}
 \end{equation}
-In the equation, $P_i$ is the number of path that flow i chooses. $P_i \in \{0,1\}$ means $Flow_i$ can choose at most one path. $max \ min \ R_i$ means $Flow_{i}$'s Interest sending rate should be maximized. The reason we set $max \ min \ R_i$ is to achieve fairness between different flows. If we do not set $max \ min \ R_i$, some flows may choose a min R to minimum the TFCT, and that will influence this flow's FCT. 
+In the equation, $P_i$ is the number of path that flow i chooses. $P_i \in \{0,1\}$ means $Flow_i$ can choose at most one path. $max \ min \ R_i$ means $Flow_{i}$'s Interest sending rate should be maximized. The reason we set $max \ min \ R_i$ is to achieve fairness between different flows. If we do not set $max \ min \ R_i$, some flows may choose a min R to minimum the TFCT, and that will influence this flow's FCT.
 % Sacrificing oneself to achieve the goal of minimum TFCT is unfair.
 
 Routers send the updated forwarding-assistance and route information to the controller at the interval of $RTT_{avg}$. The routers send back smart forwarding decision for each flow when it receives the router's updating information. The smart forwarding decision is based on the unit of flow, not the unit of each packet. So the overhead introduced by the controller's help is very limited compared with the whole volume that goes through the router. To timely reflect the change of network information to the controller, routers can change the sending interval, and that will raise the overhead. But the balance between the overhead and the accuracy of updating information can be adaptively controlled.

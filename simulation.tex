@@ -7,7 +7,7 @@
 \subsection{Simulation setup}
 In this section, we study the performance of the smart explicitness congestion notification mechanism we proposed using ndnSim\cite{ndnsimnet, ndnsim}.
 
-Fig.~\ref{fig-topology} shows the network topology we use in the simulation. There are two topologies we use. One is bottleneck topology and the other one is mesh topology. In both network topologies, there are many consumers who send Interest into network and retrieve the corresponding Data from the producer. The number of consumers varies from 1 to 100, and each consumer requests Data with a same prefix (means they are a same flow). In the mesh network, consumers can get Data from three paths and each path's bottleneck bandwidth is different. Each link's capacity varies from 30~Mbps to 200~Mbps and the propagation delay of each hop is 10~ms. The buffer in each node is equal to the production of bandwidth and delay. In the following figures, the bandwidth means the bottleneck's bandwidth.
+Fig.~\ref{mesh-topology} and Fig.~\ref{bottleneck-topology} show the network topology we use in the simulation. There are two topologies we use. One is bottleneck topology and the other one is mesh topology. In both network topologies, there are many consumers who send Interest into network and retrieve the corresponding Data from the producer. The number of consumers varies from 1 to 100, and each consumer requests Data with a same prefix (means they are a same flow). In the mesh network, consumers can get Data from three paths and each path's bottleneck bandwidth is different. Each link's capacity varies from 30~Mbps to 200~Mbps and the propagation delay of each hop is 10~ms. The buffer in each node is equal to the production of bandwidth and delay. In the following figures, the bandwidth means the bottleneck's bandwidth.
 
 We set the value of $\alpha$ and $\beta$ as 0.2 and 1.5 respectively. We compare our smart-ECN with ICP and ICP-shape. ICP is a TCP-style Interest control protocol in NDN. The Interest sending window is passively changed according the RTT and loss of Data, following the AIMD principle\cite{ICP}. ICP-shape also follows the AIMD principle but it discards the Interest instead Data when the routers sense congestion\cite{improveshape}. ICP-shape also sends NACK back to receiver if an Interest is shaped. NACK is a feedback information used to inform that the Interest has been discarded or there's no Data corresponding to the Interest. The consumer should retransmit the same Interest when it receives a NACK.
 
@@ -15,9 +15,9 @@ Our simulation includes three parts. In the first part we evaluate the flow numb
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=3in]{topology.pdf}
-\caption{The two network topologies using in simulation.}
-\label{fig-topology}
+\includegraphics[width=2.5in]{bottleneck-topology.pdf}
+\caption{Bottleneck topology using in simulation.}
+\label{bottleneck-topology}
 \end{figure}
 
 \subsection{The estimated flow number}
@@ -71,11 +71,12 @@ Fig.~\ref{fig-fct} shows the FCT of different flows. Flow complete time in NDN i
 
 \subsection{Flow complete time compared with ICP}
 
-We demonstrate the effectiveness of smart adaptive forwarding mechanism using mesh network topology. The total bottleneck bandwidth means the sum of bottleneck bandwidth on all the available paths. Using the forwarding-assistance and route information, the smart adaptive forwarding mechanism can choose a network-wide best path. The adaptive mechanism chooses the best forwarding interface just by the next hop's link information. As the next hop link information can not reflect the whole path's information, the adaptive mechanism will sometimes choose a wrong path whose later link is shared by far more flows. The non-adaptive \red{(change without to non in Fig.~\ref{fig-tfct})} mechanism chooses the path just by the route information, similar with TCP/IP. The non-adaptive mechanism can not change the forwarding interface according the network condition. As Fig.~\ref{fig-tfct} shows, under different total bandwidth, the smart adaptive forwarding's TFCT is much better than non-adaptive mechanism. As smart adaptive forwarding mechanism can choose a best path on the network-wide view, it's total flow complete time is even better than adaptive mechanism.
+We demonstrate the effectiveness of smart adaptive forwarding mechanism using mesh network topology. The total bottleneck bandwidth means the sum of bottleneck bandwidth on all the available paths. Using the forwarding-assistance and route information, the smart adaptive forwarding mechanism can choose a network-wide best path. The adaptive mechanism chooses the best forwarding interface just by the next hop's link information. As the next hop link information can not reflect the whole path's information, the adaptive mechanism will sometimes choose a wrong path whose later link is shared by far more flows. The non-adaptive mechanism chooses the path just by the route information, similar with TCP/IP. The non-adaptive mechanism can not change the forwarding interface according the network condition. As Fig.~\ref{fig-tfct} shows, under different total bandwidth, the smart adaptive forwarding's TFCT is much better than non-adaptive mechanism. As smart adaptive forwarding mechanism can choose a best path on the network-wide view, it's total flow complete time is even better than adaptive mechanism.
 
 \begin{figure}[t]
-	\centering
-	\includegraphics[width=2.5in]{adaptive-pic-cut.eps}
-	\caption{Total flow complete time compared with other two forwarding mechanisms.}
-	\label{fig-tfct}
+\centering
+\includegraphics[width=3in]{adaptive-pic.pdf}
+\caption{Total flow complete time compared with other two forwarding mechanisms.}
+\label{fig-tfct}
 \end{figure}
+
