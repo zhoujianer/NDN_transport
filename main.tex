@@ -38,7 +38,7 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{An explicit congestion notification transport control mechanism for NDN}
+\title{A proactive transport mechanism with explicit congestion notification for NDN}
 
 \author{\IEEEauthorblockN{Jianer Zhou\IEEEauthorrefmark{1}\IEEEauthorrefmark{2},
 Qinghua Wu\IEEEauthorrefmark{1}\IEEEauthorrefmark{2},
@@ -58,7 +58,8 @@ Gaogang Xie\IEEEauthorrefmark{1}}
 %\boldmath
 % Named Data Network(NDN) is a new Internet architecture. Its change of the network layer also sheds light on the transport layer. The Data which comes back along the same path of the Interest natively acts as a barrier of the Explicit Congestion Notification (ECN) information to receiver.  Avoiding a congesting path can be achieved by adaptive forwarding which is a main feature of the NDN data plane. In this paper we implement an ECN transport mechanism in NDN, using the Data to carry ECN information. And we make use of network-wide information of the SDN controller  to design smart forwarding mechanism. Our simulations in ndnSim show that the ECN transport mechanism outperform TCP-style NDN transport mechanisms in link utilization, packet dropping and flow complete time. The network-view information of the SDN controller can optimize the adaptive forwarding in NDN. By joining the ECN transport mechanism and smart forwarding, the total flow complete time can be reduced.
 
-Named Data Networking (NDN), which concentrates on \emph{information centric abstraction}, is the representative paradigm shift from current Internet architecture. NDN raises new research challenge in transport control due to its receiver-driven nature and hop-by-hop forwarding property. Existing works like adaptive forwarding avoid congestion by adaptively selecting an interface among the multiple one according to network condition. However, such an approach could not achieve considerable performance when congestion happens multiple hops away from consumers. In this paper, we propose a novel approach which utilizes Explicit Congestion Notification (ECN) information to collaborating routers and consumers to do congestion control. We further exploit network-wide information based on SDN to achieve smart forwarding. We evaluated our approach by packet-level simulation in ndnSIM. The evaluation results show that our approach outperforms TCP-style NDN transport mechanisms in link utilization, packet dropping and flow complete time.
+Named Data Networking (NDN) is a new Internet architecture that shifts the communication paradigm from \emph{where} to \emph{what}. The data transport in NDN is completely driven by consumers via the Interest sending rate. An efficient transport control mechanism therefore should provide consumers with accurate network condition variation quickly. We in this paper presents an ECN-based (Explicit Congestion Notification) approach that explicitly piggybacks the network condition information in Interest and Data packets. As Data packet follows the exactly same path of Interest packet, the information carried back by Data packets accurately indicates the network condition. Consumers then proactively adjust Interest sending rates according to such accurate information to maximize the link utilization while avoiding congestion. We further propose a SDN-based smart forwarding mechanism that schedule traffic flows among available paths with global network information. Such a smart forwarding mechanism could further improve the resource utilization of the whole network. We finally evaluated the proposed approaches by packet-level simulation in ndnSIM. The results show that our approaches outperform TCP-style NDN transport mechanisms in link utilization, packet dropping and flow complete time.
+
 
 \emph{Index Terms}-NDN, Transport mechanism, ECN, Adaptive forwarding
 \end{abstract}
@@ -68,16 +69,14 @@ Named Data Networking (NDN), which concentrates on \emph{information centric abs
 \input{introduction}
 \input{related}
 %\input{background}
-\input{rationale}
+%\input{rationale}
 \input{design}
 \input{simulation}
 
 \section{Conclusion}
 \label{sec:conclude}
 
-In conclusion, we propose an ECN congestion control and smart forwarding mechanism in NDN. Data carries the ECN information to receivers. Receivers use ECN information to adjust its Interest sending rate. Under smart forwarding mechanism, routers choose a best forwarding interface using the SDN controller's network-view information. The ECN transport mechanism can ultimately use the link utilization and reduce the dropping packets. By joining the smart forwarding and ECN transport mechanism, the whole network resource can be effective used and total flow complete time can be reduced.
-
-The future work will be focused on the theoretical analysis of system stability. In NDN, as the in-network cache, a Data will have several providers. That will influence the ECN information carried by Data and the RTT. We want to analysis what would happen on such situation and how to make effective resolution for this.
+We propose an ECN congestion control and smart forwarding mechanism in NDN. Data carries the ECN information to receivers. Receivers use ECN information to adjust its Interest sending rate. Under smart forwarding mechanism, routers choose the best forwarding interface using the SDN controller's network-view information. The ECN transport mechanism can ultimately use the link utilization and reduce the dropping packets. By joining the smart forwarding and ECN transport mechanism, the whole network resource can be effective used and total flow complete time can be reduced.
 
 \begin{thebibliography}{1}
 
@@ -123,6 +122,8 @@ a  Content -Centric Network," in IEEE INFOCOM, 2012.
 G. Carofiglio, M. Gallo, and L. Muscariello, ``Multipath congestion control in content-centric networks," in IEEE INFOCOM, 2013.
 \bibitem{Contug}
 S. Arianfar, P. Nikander, L. Eggert, and J. Ott, ``Contug: A receiver driven transport protocol for content-centric networks," in IEEE ICNP 2010 (Poster session),2010.
+\bibitem{tcpdeadline}
+C. Wilson, H. Ballani, T. Karagiannis , and A. Rowtron, ``Better never than late: meeting deadlines in datacenter networks," in Proc. of the ACM SIGCOMM 2011.
 \bibitem{improveshape}
 Y. G. Wang, N. Rozhnova, A. Narayanan, D. Oran, and I. Rhee, ``An improved hop-by-hop interest shaper for congestion control in named data networking," in Proc. Of ACM SIGCOMM ICN, 2013.
 \bibitem{ndnsimnet}
